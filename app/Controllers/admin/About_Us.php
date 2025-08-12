@@ -1212,15 +1212,15 @@ use App\Models\Home\Available_teaching_method_model;
         // }
 
 
-        public function approvals_affliation()
-        {
-            $model = new Approvals_affliation_models();
-            $data['hero'] = $model->where('section_type', 'hero')->first();
-            $data['desk'] = $model->where('section_type', 'desk')->first();
+        // public function approvals_affliation()
+        // {
+        //     $model = new Approvals_affliation_models();
+        //     $data['hero'] = $model->where('section_type', 'hero')->first();
+        //     $data['desk'] = $model->where('section_type', 'desk')->first();
 
-            return view('admin/about_us/approvals_affliation', $data);
+        //     return view('admin/about_us/approvals_affliation', $data);
 
-        }
+        // }
 
          public function save_approvals_affliation()
         {
@@ -1408,8 +1408,63 @@ use App\Models\Home\Available_teaching_method_model;
             $model = new Award_received_model();
             $model->delete($id);
             return redirect()->back()->with('success', 'Faculty Deleted');
+            
         }
 
+
+        public function approvals_affliation()
+        {
+            $model = new Approvals_affliation_models();
+
+            $data['hero'] = $model->where('section_type', 'hero')->first();
+            $data['vision_mission'] = $model->where('section_type', 'content')->first();
+
+            return view('admin/about_us/approvals_affliation', $data);
+        }
+
+
+        public function add_approvals_affliation()
+        {
+            $model = new Approvals_affliation_models();
+
+            // HERO SECTION: one-time insert/update
+            $hero = $model->where('section_type', 'hero')->first();
+            $heroData = [
+                'section_type' => 'hero',
+                'title' => $this->request->getPost('hero_title'),
+                'subtitle' => $this->request->getPost('button_name'),
+            ];
+
+            $heroImage = $this->request->getFile('hero_image');
+            if ($heroImage && $heroImage->isValid() && !$heroImage->hasMoved()) {
+                $newImage = $heroImage->getRandomName();
+                $heroImage->move('public/uploads', $newImage);
+                $heroData['image'] = $newImage;
+            }
+
+            if ($hero) {
+                $model->update($hero['id'], $heroData);
+            } else {
+                $model->insert($heroData);
+            }
+
+            // VISION & MISSION SECTION
+            $content = $model->where('section_type', 'content')->first();
+            $contentData = [
+                'section_type' => 'content',
+                'vision' => $this->request->getPost('vision'),
+                'mission' => $this->request->getPost('mission'),
+            ];
+
+            if ($content) {
+                $model->update($content['id'], $contentData);
+            } else {
+                $model->insert($contentData);
+            }
+
+            session()->setFlashdata('success', 'Vision & Mission page saved successfully.');
+            return redirect()->back();
+        }
 
         
 

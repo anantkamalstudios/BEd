@@ -31,22 +31,35 @@
 
     <!-- NCTE Recognition PDF -->
     <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-        <a href="<?= base_url('public/front_end/pdf/NCTE B.Ed grant.pdf') ?>" 
+      <h4 class="accordion-header" id="headingOne">
+        <!-- <a href="<?= base_url('public/front_end/pdf/NCTE B.Ed grant.pdf') ?>" 
            target="_blank" class="accordion-button text-decoration-none">
           NCTE Recognition
+        </a> -->
+        <?php if (!empty($pdfData['brochure'])): ?>
+        <a href="<?= base_url('uploads/pdfs/' . $pdfData['brochure']); ?>" target="_blank">
+            NCTE Recognition
         </a>
-      </h2>
+    
+    <?php endif; ?>
+        </h4>
     </div>
 
     <!-- Revise Order PDF -->
     <div class="accordion-item mt-2">
-      <h2 class="accordion-header" id="headingTwo">
-        <a href="<?= base_url('public/front_end/pdf/NCTE Revise order.pdf') ?>" 
+      <h4 class="accordion-header" id="headingTwo">
+        <!-- <a href="<?= base_url('public/front_end/pdf/NCTE Revise order.pdf') ?>" 
            target="_blank" class="accordion-button collapsed text-decoration-none">
           Revise Order
+        </a> -->
+        <?php if (!empty($pdfData['syllabus'])): ?>
+
+        <a href="<?= base_url('uploads/pdfs/' . $pdfData['syllabus']); ?>" target="_blank">
+           Revise Order
         </a>
-      </h2>
+ 
+<?php endif; ?>
+      </h4>
     </div>
 
   </div>

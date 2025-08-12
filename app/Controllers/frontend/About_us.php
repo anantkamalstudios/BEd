@@ -16,6 +16,10 @@ use App\Models\Home\BramhaValleyModel;
 use App\Models\Home\BoardContentModel;
 use App\Models\Home\Government_permission_model;
 use App\Models\Home\Award_received_model;
+use App\Models\Home\Approvals_affliation_models;
+use App\Models\PdfModel;
+
+
 
 
 class About_us extends BaseController
@@ -109,7 +113,14 @@ class About_us extends BaseController
     
     public function ncte_recognition_revise_order()
     {
-        return view('frontend/about_us/ncte_recognition_revise_order');
+        // return view('frontend/about_us/ncte_recognition_revise_order');
+        $pdfModel = new PdfModel(); // use the same model you used in admin panel
+
+    // Fetch the record (adjust logic based on your DB structure)
+        $data['pdfData'] = $pdfModel->first(); // or where('id', 1)->first();
+        // print_r( $data['pdfData']);
+
+        return view('frontend/about_us/ncte_recognition_revise_order', $data);
     }
     
     public function silent_feature()
@@ -164,7 +175,11 @@ class About_us extends BaseController
     
      public function approvals_affliation()
     {
-        return view('frontend/about_us/approvals_affliation');
+        $model = new Approvals_affliation_models();
+
+        $data['hero'] = $model->where('section_type', 'hero')->first();
+        $data['vision_mission'] = $model->where('section_type', 'content')->first();
+        return view('frontend/about_us/approvals_affliation',$data);
     }
 
 

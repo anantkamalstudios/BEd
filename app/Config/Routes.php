@@ -415,7 +415,7 @@ $routes->post('update_document', 'admin\Admission::update');
 $routes->get('delete_document/(:num)', 'admin\Admission::delete/$1');
 
 
-$routes->match(['get', 'post'], 'admin/ncte_organization_page', 'admin\NcteOrganizationController::index');
+// $routes->match(['get', 'post'], 'admin/ncte_organization_page', 'admin\NcteOrganizationController::index');
 
 
 
@@ -433,7 +433,16 @@ $routes->get('delete_award/(:num)', 'admin\About_Us::delete_award/$1');
 $routes->post('update_award', 'admin\About_Us::update_award');
 
 $routes->get('/approvalsaffliation', 'admin\about_us::approvals_affliation');
-$routes->post('save_approvals_affliation', 'admin\About_Us::save_approvals_affliation');
+$routes->post('add_approvals_affliation', 'admin\About_Us::add_approvals_affliation');
+
+
+
+// $routes->get('/pdf', 'PdfController::index');
+// $routes->post('/pdf/upload', 'PdfController::upload');
+// $routes->get('/pdf/view/(:num)', 'PdfController::view/$1');
+
+$routes->get('admin/ncte_organization_page', 'PdfController::index');
+$routes->post('pdf/upload', 'PdfController::upload');
 
 
 
